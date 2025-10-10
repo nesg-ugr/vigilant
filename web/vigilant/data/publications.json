@@ -1,0 +1,126 @@
+[
+  {
+    "type": "journal",
+    "year": 2025,
+    "title": "Intent-to-Policy Translation with Formal Guarantees",
+    "venue": "IEEE Transactions on Dependable and Secure Computing",
+    "authors": ["R. Magán-Carrión", "P. García-Teodoro", "D. Pérez"],
+    "doi": "10.1109/TDSC.2025.1234567",
+    "pdf": "https://arxiv.org/pdf/2501.01234.pdf",
+    "code": "https://github.com/org/intent2policy"
+  },
+  {
+    "type": "conference",
+    "year": 2025,
+    "title": "Closed-Loop Assurance for Intent-Based Security in ICS/OT",
+    "venue": "JNIC 2025",
+    "authors": ["R. Magán-Carrión", "P. García-Teodoro", "D. Pérez"],
+    "doi": "",
+    "pdf": "https://example.org/papers/jnic2025-intent-ics.pdf",
+    "code": "https://github.com/org/ics-closed-loop"
+  },
+  {
+    "type": "workshop",
+    "year": 2025,
+    "title": "Evaluating Intent DSLs with Traceability Metrics",
+    "venue": "NDSS Workshop on Security Automation",
+    "authors": ["D. Pérez", "R. Magán-Carrión"],
+    "doi": "",
+    "pdf": "https://example.org/papers/ndssw25-traceability.pdf",
+    "code": "https://github.com/org/intent-dsl-metrics"
+  },
+  {
+    "type": "preprint",
+    "year": 2025,
+    "title": "Runtime Verification of Intent-Driven Policies",
+    "venue": "arXiv",
+    "authors": ["P. García-Teodoro", "R. Magán-Carrión"],
+    "doi": "10.48550/arXiv.2505.01234",
+    "pdf": "https://arxiv.org/pdf/2505.01234.pdf",
+    "code": ""
+  },
+
+  {
+    "type": "journal",
+    "year": 2024,
+    "title": "A Lightweight Intent DSL for Network Defense",
+    "venue": "Computers & Security",
+    "authors": ["D. Pérez", "R. Magán-Carrión"],
+    "doi": "10.1016/j.cose.2024.100999",
+    "pdf": "https://example.org/papers/cose2024-intent-dsl.pdf",
+    "code": "https://github.com/org/intent-dsl"
+  },
+  {
+    "type": "conference",
+    "year": 2024,
+    "title": "Policy Orchestration Across Hybrid IT/OT Environments",
+    "venue": "IEEE/IFIP NOMS 2024",
+    "authors": ["R. Magán-Carrión", "P. García-Teodoro"],
+    "doi": "",
+    "pdf": "",
+    "code": "https://github.com/org/policy-orchestrator"
+  },
+  {
+    "type": "other",
+    "year": 2024,
+    "title": "Technical Report: Testbed for ICS Incident Response",
+    "venue": "NESG-UGR Tech Report",
+    "authors": ["D. Pérez", "R. Magán-Carrión"],
+    "doi": "",
+    "pdf": "https://example.org/reports/nesg-ics-testbed-2024.pdf",
+    "code": ""
+  },
+
+  {
+    "type": "conference",
+    "year": 2023,
+    "title": "Synthetic Traffic Generation for Anomaly Detection in OT",
+    "venue": "ACSAC 2023",
+    "authors": ["P. García-Teodoro", "D. Pérez"],
+    "doi": "",
+    "pdf": "https://example.org/papers/acsac23-synth-traffic.pdf",
+    "code": "https://github.com/org/synth-dataset-gen"
+  },
+  {
+    "type": "workshop",
+    "year": 2023,
+    "title": "From Intent to Enforcement: A Pipeline Prototype",
+    "venue": "ACM SIGCOMM Workshop on Network Security",
+    "authors": ["R. Magán-Carrión", "D. Pérez"],
+    "doi": "",
+    "pdf": "",
+    "code": "https://github.com/org/intent-pipeline"
+  },
+  {
+    "type": "preprint",
+    "year": 2023,
+    "title": "Explainable Intent Validation for Security Policies",
+    "venue": "arXiv",
+    "authors": ["R. Magán-Carrión", "P. García-Teodoro"],
+    "doi": "10.48550/arXiv.2312.00001",
+    "pdf": "https://arxiv.org/pdf/2312.00001.pdf",
+    "code": ""
+  },
+
+  {
+    "type": "journal",
+    "year": 2022,
+    "title": "UGR’16: A Dataset for Cyclostationarity-based Network IDSs (Revisit)",
+    "venue": "Journal of Network and Computer Applications",
+    "authors": ["G. Maciá-Fernández", "J. Camacho", "R. Magán-Carrión", "P. García-Teodoro", "R. Therón"],
+    "doi": "10.1016/j.jnca.2022.103420",
+    "pdf": "https://example.org/papers/jnca-ugr16-revisit.pdf",
+    "code": ""
+  },
+  {
+    "type": "conference",
+    "year": 2022,
+    "title": "Early Experience with Intent-Based Segmentation",
+    "venue": "IEEE CNS 2022",
+    "authors": ["R. Magán-Carrión", "P. García-Teodoro"],
+    "doi": "",
+    "pdf": "",
+    "code": "https://github.com/org/intent-segmentation"
+  }
+]
+

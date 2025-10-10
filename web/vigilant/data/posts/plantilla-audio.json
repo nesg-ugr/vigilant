@@ -1,0 +1,12 @@
+{
+  "slug": "plantilla-audio",
+  "type": "audio",
+  "title": "Podcast / Entrevista",
+  "date": "2025-10-10",
+  "author": "Nombre del entrevistador/a",
+  "summary": "Resumen del episodio y puntos clave.",
+  "cover": "https://picsum.photos/seed/cover-audio/1200/630",
+  "tags": ["podcast", "entrevista"],
+  "content": "<p>Introduce el contexto del audio, los temas tratados y los participantes. Si quieres embeber un reproductor externo, puedes pegar aquí el <em>iframe</em> que te dé tu plataforma (si lo permite) o enlazar el archivo de audio.</p><p><a href='https://example.org/audio/episodio1.mp3' target='_blank' rel='noopener'>Descargar MP3</a></p>"
+}
+

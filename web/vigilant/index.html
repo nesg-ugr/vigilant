@@ -1,0 +1,647 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>VIGILANT – Proyecto</title>
+  <meta name="description" content="Sitio del proyecto VIGILANT. Accesible, responsive y fácil de mantener sin CMS." />
+  <meta name="color-scheme" content="light" />
+  <link rel="icon" href="logo.png" />
+  <style>
+    /* Paleta clara estilo 'pantone' (pasteles limpios) */
+    :root{
+      --bg:#fafbff;            /* blanco azulado */
+      --fg:#10203a;            /* azul petróleo para contraste AA */
+      --surface:#ffffff;       /* tarjetas */
+      --muted:#5f6b7a;         /* texto secundario */
+      --accent:#7ec8e3;        /* cian pastel */
+      --accent-2:#b8a5ff;      /* violeta pastel */
+      --accent-3:#ffd479;      /* amarillo pastel */
+      --ring:#0e7fbf;
+      --border:#e6e8ee;        /* borde suave */
+      --shadow:0 10px 30px rgba(16,32,58,.08);
+    }
+
+    *,*::before,*::after{ box-sizing:border-box }
+    html,body{ height:100% }
+    body{ margin:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial; background:var(--bg); color:var(--fg); line-height:1.55 }
+    a{ color:#0e7fbf }
+    img{ max-width:100%; height:auto; }
+    .container{ width:min(1180px, 100% - 2rem); margin-inline:auto }
+    .skip-link{ position:absolute; left:-9999px; top:auto; width:1px; height:1px; overflow:hidden }
+    .skip-link:focus{ left:1rem; top:1rem; width:auto; height:auto; background:#0e7fbf; color:white; padding:.5rem .75rem; border-radius:.5rem; z-index:9999 }
+
+    /* Header con logo más presente */
+    header.site-header{ position:sticky; top:0; background:rgba(255,255,255,.9); border-bottom:1px solid var(--border); backdrop-filter:saturate(180%) blur(6px); z-index:50 }
+    .nav{ display:flex; align-items:center; justify-content:space-between; gap:1rem; padding:.75rem 0 }
+    .brand{ display:flex; align-items:center; gap:1rem; text-decoration:none; color:inherit }
+    .brand img{ width:64px; height:64px; border-radius:16px; box-shadow: var(--shadow); background:#fff }
+    .brand .title{ font-weight:900; letter-spacing:.2px; font-size:1.25rem }
+    nav[aria-label]{ display:flex; align-items:center; gap:.5rem }
+    .menu{ display:flex; gap:.25rem; align-items:center }
+    .menu a{ text-decoration:none; color:inherit; padding:.6rem .9rem; border-radius:.6rem; border:1px solid transparent }
+    .menu a:hover,.menu a:focus-visible{ background:var(--surface); border-color:var(--border) }
+    .menu a[aria-current="page"]{ background:var(--accent); color:#10203a; border-color:transparent }
+    .menu-toggle{ display:none; border:1px solid var(--border); background:var(--surface); padding:.5rem .6rem; border-radius:.6rem; }
+    .menu-toggle:focus-visible{ outline:2px solid var(--ring); outline-offset:2px }
+
+    @media (max-width: 860px){
+      .menu{ display:none; position:absolute; right:1rem; top:84px; background:var(--surface); border:1px solid var(--border); border-radius:.75rem; padding:.5rem; box-shadow:var(--shadow) }
+      .menu[data-open="true"]{ display:flex; flex-direction:column; min-width:260px }
+      .menu a{ padding:.8rem .9rem }
+      .menu-toggle{ display:inline-flex; align-items:center; gap:.5rem }
+    }
+
+    .ring-card{ background:var(--surface); border:1px solid var(--border); border-radius:1.25rem; padding:1rem; box-shadow:var(--shadow) }
+
+    /* Hero con logo centrado, descripción y video resumen */
+    .hero{ position:relative; padding:clamp(2rem, 4vw + 1rem, 4rem) 0; display:grid; grid-template-columns: 1fr; gap:1.25rem; align-items:center; text-align:center }
+    .hero h1{ font-size:clamp(1.9rem, 2.6vw + 1rem, 3.1rem); line-height:1.15; margin:.2rem 0 }
+    .hero p{ color:var(--muted); margin:.75rem auto 0; max-width:900px }
+    .badge{ display:inline-block; padding:.35rem .6rem; border:1px solid var(--border); border-radius:999px; font-size:.9rem; background:var(--surface) }
+    .hero-cta{ display:flex; justify-content:center; gap:.75rem; margin-top:1rem; flex-wrap:wrap }
+
+    /* Botones de color uniforme (sin degradado) */
+    .btn{ display:inline-flex; align-items:center; justify-content:center; gap:.5rem; padding:.7rem 1rem; border-radius:.7rem; border:1px solid var(--border); text-decoration:none; font-weight:800; background:var(--accent); color:#10203a }
+    .btn.primary{ background:var(--accent-3); color:#10203a; border-color:transparent }
+    .btn:focus-visible{ outline:2px solid var(--ring); outline-offset:2px }
+
+    .media-centered{ display:grid; place-items:center }
+    .logo-hero{ width:min(420px, 80vw); height:auto; display:block; margin-inline:auto; border-radius:1rem; border:1px solid var(--border); background:#fff; box-shadow:var(--shadow) }
+    .video-wrap{ aspect-ratio:16/9; border-radius:1rem; overflow:hidden; border:1px solid var(--border); background:#eef6ff; box-shadow:var(--shadow); width:min(900px, 100%) }
+    .video-wrap iframe, .video-wrap video{ width:100%; height:100%; display:block }
+
+    section{ padding:clamp(1.6rem, 3vw, 2.6rem) 0 }
+    .section-head{ display:flex; align-items:end; justify-content:space-between; gap:1rem; margin-bottom:1rem }
+    .section-head h2{ margin:0; font-size:1.7rem }
+    .muted{ color:var(--muted) }
+
+    .grid{ display:grid; gap:1rem }
+    .grid.cols-3{ grid-template-columns: repeat(3, 1fr) }
+    .grid.cols-2{ grid-template-columns: repeat(2, 1fr) }
+    @media (max-width: 900px){ .grid.cols-3{ grid-template-columns: 1fr 1fr } }
+    @media (max-width: 640px){ .grid.cols-3,.grid.cols-2{ grid-template-columns: 1fr } }
+
+    .card{ background:var(--surface); border:1px solid var(--border); border-radius:1rem; padding:1rem; box-shadow:var(--shadow) }
+    .card h3{ margin:.2rem 0 .4rem }
+
+    /* Equipo */
+    .team-card{ display:grid; grid-template-columns: 92px 1fr; gap:1rem; align-items:center }
+    .avatar{ width:92px; height:92px; border-radius:14px; background:var(--accent); display:grid; place-items:center; font-weight:800; font-size:1.3rem; color:#10203a }
+    .avatar img{ width:100%; height:100%; object-fit:cover; border-radius:inherit }
+    .chip{ display:inline-flex; align-items:center; gap:.35rem; border:1px solid var(--border); border-radius:999px; padding:.28rem .6rem; font-size:.85rem; background:var(--surface) }
+
+    /* Publicaciones agrupadas por año y tipo */
+    .pub-list{ list-style:none; padding:0; margin:0 }
+    .year-group{ margin: 1rem 0 1.2rem }
+    .year-heading{ font-size:1.35rem; margin:0 0 .4rem }
+    .type-subgroup{ margin:.6rem 0 .8rem }
+    .type-heading{ font-size:1.05rem; margin:.2rem 0 .4rem; color:var(--muted) }
+    .pub{ display:grid; gap:.5rem; grid-template-columns: 1fr auto; align-items:start; padding:1rem; border:1px solid var(--border); border-radius:.75rem; background:var(--surface); box-shadow:var(--shadow); margin:.45rem 0 }
+    .pub .meta{ font-size:.9rem; color:var(--muted) }
+    .pub-actions{ display:flex; gap:.5rem; flex-wrap:wrap }
+
+    .toolbar{ display:flex; flex-wrap:wrap; gap:.5rem }
+    .toolbar input[type="search"], .toolbar select{ padding:.6rem .7rem; border-radius:.6rem; border:1px solid var(--border); background:transparent; color:inherit }
+
+    /* Blog */
+    .post-card{ display:grid; grid-template-columns: 140px 1fr; gap:1rem; align-items:center; }
+    .thumb{ width:140px; height:90px; border-radius:.6rem; overflow:hidden; background:#eef2ff; border:1px solid var(--border) }
+    .thumb img, .thumb video{ width:100%; height:100%; object-fit:cover; display:block }
+    .tags{ display:flex; gap:.4rem; flex-wrap:wrap; margin-top:.4rem }
+    .tag{ font-size:.8rem; padding:.2rem .5rem; border:1px solid var(--border); border-radius:999px; background:#f6f7fb }
+
+    footer.site-footer{ border-top:1px solid var(--border); padding:1.2rem 0; font-size:.95rem; background:linear-gradient(180deg, transparent, #f5f7ff) }
+    .footer-grid{ display:grid; gap:1rem; grid-template-columns: 1fr auto }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#contenido">Saltar al contenido principal</a>
+
+  <!-- ===== Header & Navigation ===== -->
+  <header class="site-header" role="banner">
+    <div class="container nav">
+      <a class="brand" href="?view=proyecto" aria-label="Inicio">
+        <img id="project-logo" alt="Logo del proyecto" src="logo.png" />
+        <span class="title" id="project-title">VIGILANT</span>
+      </a>
+
+      <nav aria-label="Principal">
+        <button class="menu-toggle" aria-expanded="false" aria-controls="menu" id="menuBtn" title="Abrir menú">
+          <span aria-hidden>☰</span><span class="sr-only">Menú</span>
+        </button>
+        <div class="menu" id="menu">
+          <a href="?view=proyecto" data-view="proyecto">Proyecto</a>
+          <a href="?view=equipo" data-view="equipo">Equipo</a>
+          <a href="?view=publicaciones" data-view="publicaciones">Publicaciones</a>
+          <a href="?view=prototipos" data-view="prototipos">Prototipos & Código</a>
+          <a href="?view=blog" data-view="blog">Blog & Multimedia</a>
+          <a href="?view=contacto" data-view="contacto">Contacto</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main id="contenido" class="container" tabindex="-1">
+    <!-- ===== Hero / Overview ===== -->
+    <section class="hero" id="sobre" data-page="proyecto">
+      <div>
+        <span class="badge" id="project-badge">Proyecto I+D</span>
+        <h1 id="hero-title">VIGILANT</h1>
+        <p id="hero-tagline" class="muted"></p>
+      </div>
+      <div class="media-centered">
+        <img class="logo-hero" id="hero-logo" src="logo.png" alt="Logo del proyecto VIGILANT" />
+      </div>
+      <p id="project-description" class="muted"></p>
+      <div class="media-centered" style="margin-top:.75rem">
+        <div class="video-wrap" id="summary-video" aria-label="Vídeo resumen del proyecto"></div>
+      </div>
+      <div class="hero-cta">
+        <a id="primary-cta" class="btn primary" href="?view=publicaciones">Ver publicaciones</a>
+        <a id="secondary-cta" class="btn" href="?view=prototipos">Ver prototipos</a>
+      </div>
+    </section>
+
+    <!-- ===== Objectives ===== -->
+    <section data-page="proyecto">
+      <div class="section-head">
+        <h2>Objetivos</h2>
+      </div>
+      <div class="grid cols-3" id="objectives"></div>
+    </section>
+
+    <!-- ===== Team ===== -->
+    <section id="equipo" data-page="equipo">
+      <div class="section-head">
+        <h2>Equipo</h2>
+        <p class="muted">Miembros del proyecto con foto y enlaces (ORCID, ResearcherID, web personal...).</p>
+      </div>
+      <div class="grid cols-3" id="team"></div>
+    </section>
+
+    <!-- ===== Publications ===== -->
+    <section id="publicaciones" data-page="publicaciones">
+      <div class="section-head">
+        <h2>Publicaciones</h2>
+        <div class="toolbar" role="region" aria-label="Herramientas de filtrado de publicaciones">
+          <input id="pub-search" type="search" placeholder="Buscar título/autor/venue" aria-label="Buscar" />
+          <select id="pub-type" aria-label="Filtrar por tipo">
+            <option value="">Todos los tipos</option>
+            <option value="journal">Revista</option>
+            <option value="conference">Conferencia</option>
+            <option value="workshop">Workshop</option>
+            <option value="preprint">Preprint</option>
+          </select>
+          <select id="pub-year" aria-label="Filtrar por año">
+            <option value="">Todos los años</option>
+          </select>
+        </div>
+      </div>
+      <ol class="pub-list" id="pub-list" aria-live="polite"></ol>
+    </section>
+
+    <!-- ===== Prototypes & Code ===== -->
+    <section id="prototipos" data-page="prototipos">
+      <div class="section-head">
+        <h2>Prototipos & Código</h2>
+        <p class="muted">Demos, repos y paquetes generados en el proyecto.</p>
+      </div>
+      <div class="grid cols-3" id="prototypes"></div>
+    </section>
+
+    <!-- ===== Blog & Multimedia ===== -->
+    <section id="blog" data-page="blog">
+      <div class="section-head">
+        <h2>Blog & Multimedia</h2>
+        <div class="toolbar" role="region" aria-label="Filtrado del blog">
+          <input id="post-search" type="search" placeholder="Buscar en entradas" aria-label="Buscar en blog" />
+          <select id="post-year" aria-label="Filtrar por año"><option value="">Todos los años</option></select>
+          <select id="post-type" aria-label="Filtrar por tipo"><option value="">Todos</option><option value="post">Artículo</option><option value="video">Vídeo</option><option value="audio">Audio</option></select>
+        </div>
+      </div>
+      <div class="grid cols-2" id="posts"></div>
+    </section>
+
+    <!-- ===== Vista de detalle de post ===== -->
+    <section id="post" data-page="post" style="display:none">
+      <article class="card" id="post-article" aria-live="polite">
+        <div class="stack" style="justify-content:space-between; align-items:flex-start">
+          <a href="?view=blog" class="chip" id="back-to-blog">← Volver al blog</a>
+        </div>
+        <header style="margin-top:.5rem">
+          <h1 id="post-title" style="margin:.2rem 0 .4rem"></h1>
+          <div class="muted" id="post-meta"></div>
+        </header>
+        <figure class="ring-card" id="post-media" style="margin:1rem 0"></figure>
+        <div id="post-content"></div>
+        <footer style="margin-top:1rem">
+          <div class="tags" id="post-tags"></div>
+        </footer>
+      </article>
+    </section>
+
+    <!-- ===== Contact ===== -->
+    <section id="contacto" data-page="contacto">
+      <div class="section-head"><h2>Contacto</h2></div>
+      <div class="card" id="contact-card"></div>
+    </section>
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="container footer-grid">
+      <div>
+        <strong id="footer-title">VIGILANT</strong>
+        <div class="muted" id="footer-ack"></div>
+      </div>
+      <div style="text-align:end">
+        <div>© <span id="year"></span> <span id="org"></span></div>
+        <div class="muted">Actualizado: <time id="last-updated"></time></div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===== Behavior: multipágina + fetch de JSON externo ===== -->
+  <script>
+    const $ = (sel, ctx=document) => ctx.querySelector(sel);
+    const $$ = (sel, ctx=document) => Array.from(ctx.querySelectorAll(sel));
+    const DATA_URL = 'data/project.json';          // ← JSON general externo
+    const PUBLICATIONS_URL = 'data/publications.json'; // ← publicaciones externas
+    const PROTOTYPES_URL   = 'data/prototypes.json';   // ← prototipos externos
+    const POSTS_INDEX_URL  = 'data/posts/index.json';  // ← índice de posts (lista de slugs)
+    const POST_BASE        = 'data/posts/';            // ← carpeta con cada post en JSON
+
+    // Utilidad fetch JSON
+    async function jget(url){
+      const res = await fetch(url, {cache:'no-store'});
+      if(!res.ok) throw new Error('No se pudo cargar ' + url);
+      return res.json();
+    }
+
+    // Estado global
+    const state = { data:null, posts:[], publications:[], prototypes:[] };
+
+    // Mobile menu
+    const menuBtn = $('#menuBtn');
+    const menu = $('#menu');
+    menuBtn?.addEventListener('click', () => {
+      const open = menu.getAttribute('data-open') === 'true';
+      menu.setAttribute('data-open', String(!open));
+      menuBtn.setAttribute('aria-expanded', String(!open));
+    });
+
+    // Render dependiente de datos
+    function renderAll(){
+      const data = state.data || {};
+
+      // Header/Footer
+      $('#project-logo').src = data.logo || 'logo.png';
+      $('#project-title').textContent = data.title || 'Proyecto';
+      $('#footer-title').textContent = data.title || 'Proyecto';
+      $('#footer-ack').textContent = data.acknowledgements || '';
+      $('#org').textContent = data.organization || '';
+      $('#year').textContent = new Date().getFullYear();
+      if(data.lastUpdated){
+        $('#last-updated').dateTime = data.lastUpdated;
+        $('#last-updated').textContent = new Date(data.lastUpdated).toLocaleDateString();
+      }
+
+      // Hero
+      $('#project-badge').textContent = data.badge || 'Proyecto';
+      $('#hero-title').textContent = data.title || '';
+      $('#hero-tagline').textContent = data.tagline || '';
+      $('#project-description').textContent = data.description || '';
+      // Vídeo resumen
+      const videoHost = $('#summary-video');
+      videoHost.innerHTML = '';
+      const v = data.summaryVideo;
+      if(v){
+        if(v.type === 'youtube' && v.id){
+          videoHost.innerHTML = `<iframe title="Vídeo resumen" src="https://www.youtube.com/embed/${v.id}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`;
+        } else if(v.type === 'vimeo' && v.id){
+          videoHost.innerHTML = `<iframe title="Vídeo resumen" src="https://player.vimeo.com/video/${v.id}" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>`;
+        } else if(v.type === 'mp4' && v.src){
+          videoHost.innerHTML = `<video controls preload="metadata"><source src="${v.src}" type="video/mp4"></video>`;
+        }
+      }
+
+      // Objetivos
+      const objHost = $('#objectives');
+      objHost.innerHTML = '';
+      (data.objectives || []).forEach(text => {
+        const el = document.createElement('div');
+        el.className = 'card';
+        el.innerHTML = `<div class="stack"><span class="chip" aria-hidden>✓</span><strong>${text}</strong></div>`;
+        objHost.appendChild(el);
+      });
+
+      // Equipo
+      const teamHost = $('#team');
+      teamHost.innerHTML = '';
+      (data.team || []).forEach(m => {
+        const card = document.createElement('article');
+        card.className = 'card team-card';
+        const initials = (m.name||'').split(' ').map(p=>p[0]).slice(0,2).join('');
+        const avatar = m.photo ? `<img src="${m.photo}" alt="Foto de ${m.name}">` : initials;
+        card.innerHTML = `
+          <div class="avatar" aria-hidden>${avatar}</div>
+          <div>
+            <h3>${m.name||''}</h3>
+            <div class="muted">${m.role||''} · ${m.affiliation||''}</div>
+            ${m.short ? `<p class="muted" style="margin:.4rem 0 0">${m.short}</p>`: ''}
+            <div class="stack" style="margin-top:.6rem">
+              ${m.email ? `<a class="chip" href="mailto:${m.email}" aria-label="Enviar correo a ${m.name}">✉️ <span>${m.email}</span></a>`: ''}
+              ${(m.links||[]).map(l=>`<a class="chip" href="${l.url}" target="_blank" rel="noopener">🔗 <span>${l.label}</span></a>`).join('')}
+            </div>
+          </div>`;
+        teamHost.appendChild(card);
+      });
+
+      // ===== Publicaciones (agrupadas por año y tipo) =====
+      const pubList = $('#pub-list');
+      const yearSel = $('#pub-year');
+
+      function groupBy(arr, keyFn){
+        return arr.reduce((acc, item)=>{
+          const k = keyFn(item);
+          (acc[k] ||= []).push(item);
+          return acc;
+        }, {});
+      }
+
+      function renderPubs(){
+        if(!pubList) return;
+        pubList.innerHTML='';
+
+        // Dataset completo
+        const dataset = (state.publications || []).slice();
+
+        // Años disponibles ordenados desc
+        const yearsAll = Array.from(new Set(dataset.map(p=>p.year))).sort((a,b)=>b-a);
+
+        // --- Preservar selección al reconstruir opciones ---
+        const prev = $('#pub-year').value || '';
+        const options = ['<option value="">Todos los años</option>'].concat(yearsAll.map(y=>`<option value="${y}">${y}</option>`)).join('');
+        yearSel.innerHTML = options;
+        if(prev && yearsAll.includes(Number(prev))) yearSel.value = prev;
+
+        // Filtros actuales (tras restaurar selección)
+        const q   = ($('#pub-search')||{}).value?.toLowerCase?.().trim?.() || '';
+        const typ = ($('#pub-type')||{}).value || '';
+        const yr  = ($('#pub-year')||{}).value || '';
+
+        const filtered = dataset
+          .filter(p => !typ || p.type===typ)
+          .filter(p => !yr || String(p.year)===yr)
+          .filter(p => {
+            if(!q) return true;
+            const hay = [p.title, p.venue, (p.authors||[]).join(' '), p.type, p.year].join(' ').toLowerCase();
+            return hay.includes(q);
+          });
+
+        if(!filtered.length){
+          const empty = document.createElement('li');
+          empty.className = 'pub';
+          empty.innerHTML = `<div>No hay publicaciones que coincidan con el filtro.</div>`;
+          pubList.appendChild(empty);
+          return;
+        }
+
+        // Agrupar por año (desc) → tipo (orden fijo)
+        const byYear = filtered.reduce((acc,p)=>{ (acc[p.year] ||= []).push(p); return acc; }, {});
+        const yearsSorted = Object.keys(byYear).map(Number).sort((a,b)=>b-a);
+        const typeOrder = ['journal','conference','workshop','preprint','other'];
+
+        yearsSorted.forEach(year => {
+          const yWrap = document.createElement('li');
+          yWrap.className = 'year-group';
+          yWrap.setAttribute('role','group');
+          yWrap.innerHTML = `<h3 class="year-heading" id="year-${year}">📅 ${year}</h3>`;
+
+          const inYear = byYear[year];
+          const byType = inYear.reduce((acc,p)=>{ const k = typeOrder.includes(p.type) ? p.type : 'other'; (acc[k] ||= []).push(p); return acc; }, {});
+
+          typeOrder.forEach(t => {
+            const list = byType[t];
+            if(!list || !list.length) return;
+            const tWrap = document.createElement('div');
+            const label = t==='journal' ? 'Revistas' : t==='conference' ? 'Conferencias' : t==='workshop' ? 'Workshops' : t==='preprint' ? 'Preprints' : 'Otros';
+            tWrap.className = 'type-subgroup';
+            tWrap.innerHTML = `<h4 class="type-heading">${label}</h4>`;
+
+            list.sort((a,b)=> (a.title||'').localeCompare(b.title||''));
+            list.forEach(p => {
+              const item = document.createElement('div');
+              item.className = 'pub';
+              item.innerHTML = `
+                <div>
+                  <h3 style=\"margin:0 0 .25rem\">${p.title}</h3>
+                  <div class=\"meta\">${(p.authors||[]).join(', ')} · <em>${p.venue||''}</em> · ${p.type}</div>
+                </div>
+                <div class=\"pub-actions\">
+                  ${p.doi? `<a class=\"btn\" href=\"https://doi.org/${p.doi}\" target=\"_blank\" rel=\"noopener\">DOI</a>`:''}
+                  ${p.pdf? `<a class=\"btn\" href=\"${p.pdf}\" target=\"_blank\" rel=\"noopener\">PDF</a>`:''}
+                  ${p.code? `<a class=\"btn\" href=\"${p.code}\" target=\"_blank\" rel=\"noopener\">Código</a>`:''}
+                </div>`;
+              tWrap.appendChild(item);
+            });
+
+            yWrap.appendChild(tWrap);
+          });
+
+          pubList.appendChild(yWrap);
+        });
+      }
+
+      renderPubs();
+      $('#pub-search')?.addEventListener('input', renderPubs);
+      $('#pub-type')?.addEventListener('change', renderPubs);
+      $('#pub-year')?.addEventListener('change', renderPubs);
+
+      // ===== Prototipos (desde JSON externo) =====
+      const protoHost = $('#prototypes');
+      protoHost.innerHTML = '';
+      (state.prototypes||[]).forEach(pr => {
+        const card = document.createElement('article');
+        card.className = 'card';
+        card.innerHTML = `
+          <h3>${pr.name}</h3>
+          <p class="muted">${pr.description||''}</p>
+          <div class="stack" style="margin-top:.5rem">
+            ${pr.repo? `<a class="chip" href="${pr.repo}" target="_blank" rel="noopener">📦 Repo</a>`:''}
+            ${pr.demo? `<a class="chip" href="${pr.demo}" target="_blank" rel="noopener">▶️ Demo</a>`:''}
+          </div>`;
+        protoHost?.appendChild(card);
+      });
+
+      // Contacto
+      const c = data.contacts||{};
+      $('#contact-card').innerHTML = `
+        <div class="grid cols-2">
+          <div>
+            <strong>Correo</strong><div><a href="mailto:${c.email||''}">${c.email||''}</a></div>
+            <strong>Sitio web</strong><div><a href="${c.website||'#'}" target="_blank" rel="noopener">${c.website||''}</a></div>
+          </div>
+          <div>
+            <strong>Dirección</strong><div>${c.address||''}</div>
+            <div class="stack" style="margin-top:.5rem">
+              ${c.twitter? `<a class="chip" href="${c.twitter}" target="_blank" rel="noopener">𝕏 / Twitter</a>`:''}
+              ${c.github? `<a class="chip" href="${c.github}" target="_blank" rel="noopener">GitHub</a>`:''}
+            </div>
+          </div>
+        </div>`;
+
+      // Render posts (lista)
+      renderPostsList();
+    }
+
+    // Blog – lista
+    function renderPostsList(){
+      const postHost = $('#posts');
+      if(!postHost) return;
+      const q = ($('#post-search')||{}).value?.toLowerCase?.().trim?.() || '';
+      const yr = ($('#post-year')||{}).value || '';
+      const tp = ($('#post-type')||{}).value || '';
+
+      postHost.innerHTML = '';
+      const posts = state.posts
+        .filter(p => !yr || String(new Date(p.date).getFullYear())===yr)
+        .filter(p => !tp || p.type===tp)
+        .filter(p => !q || [p.title,p.summary,(p.tags||[]).join(' ')].join(' ').toLowerCase().includes(q))
+        .sort((a,b)=> new Date(b.date) - new Date(a.date));
+
+      const postYearSel = $('#post-year');
+      if(postYearSel && !postYearSel.dataset.filled){
+        const years = Array.from(new Set(state.posts.map(p=> new Date(p.date).getFullYear()))).sort((a,b)=>b-a);
+        years.forEach(y=>{ const o = document.createElement('option'); o.value = y; o.textContent = y; postYearSel.appendChild(o); });
+        postYearSel.dataset.filled = 'true';
+      }
+
+      posts.forEach(p => {
+        const card = document.createElement('article');
+        card.className = 'card post-card';
+        const media = p.type==='video' && p.video ? `<div class="thumb"><video src="${p.video.src||''}" muted></video></div>` : `<div class="thumb">${p.cover? `<img src="${p.cover}" alt="${p.title}">` : ''}</div>`;
+        card.innerHTML = `
+          ${media}
+          <div>
+            <h3 style="margin:.2rem 0"><a href="?view=post&slug=${p.slug}">${p.title}</a></h3>
+            <div class="muted">${new Date(p.date).toLocaleDateString()}</div>
+            <p class="muted" style="margin:.4rem 0 0">${p.summary||''}</p>
+            <div class="tags">${(p.tags||[]).map(t=>`<span class='tag'>${t}</span>`).join('')}</div>
+          </div>`;
+        postHost.appendChild(card);
+      });
+
+      if(!postHost.children.length){
+        const empty = document.createElement('div');
+        empty.className = 'card';
+        empty.textContent = 'No hay entradas para los filtros seleccionados.';
+        postHost.appendChild(empty);
+      }
+    }
+
+    async function renderPostDetail(slug){
+      const host = $('#post-article');
+      const url = POST_BASE + slug + '.json';
+      let post;
+      try{ post = await jget(url); }
+      catch(e){ host.innerHTML = `<p>No se pudo cargar la entrada. <a class='chip' href='?view=blog'>Volver al blog</a></p>`; return; }
+
+      $('#post-title').textContent = post.title || '';
+      const meta = [new Date(post.date).toLocaleDateString(), post.author].filter(Boolean).join(' · ');
+      $('#post-meta').textContent = meta;
+      const mediaBox = $('#post-media');
+      mediaBox.innerHTML = '';
+      if(post.type==='video' && post.video){
+        if(post.video.type==='youtube' && post.video.id){
+          mediaBox.innerHTML = `<div class='video-wrap'><iframe title="${post.title}" src="https://www.youtube.com/embed/${post.video.id}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>`;
+        } else if(post.video.type==='vimeo' && post.video.id){
+          mediaBox.innerHTML = `<div class='video-wrap'><iframe title="${post.title}" src="https://player.vimeo.com/video/${post.video.id}" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe></div>`;
+        } else if(post.video.type==='mp4' && post.video.src){
+          mediaBox.innerHTML = `<div class='video-wrap'><video controls preload="metadata"><source src="${post.video.src}" type="video/mp4"></video></div>`;
+        }
+      } else if(post.cover){
+        mediaBox.innerHTML = `<img src="${post.cover}" alt="${post.title}" style="border-radius:1rem; border:1px solid var(--border)">`;
+      }
+      $('#post-content').innerHTML = post.content || '';
+      $('#post-tags').innerHTML = (post.tags||[]).map(t=>`<span class='tag'>${t}</span>`).join('');
+      document.title = (post.title||'Entrada') + ' – ' + (state.data?.title||'Proyecto');
+    }
+
+    /* ===== Navegación multipágina sin CMS ===== */
+    function applyView(){
+      const params = new URLSearchParams(location.search);
+      const view = params.get('view') || 'proyecto';
+      const slugParam = params.get('slug') || '';
+
+      $$('section[data-page]').forEach(sec => sec.style.display = sec.getAttribute('data-page')===view ? '' : 'none');
+      $$('.menu a').forEach(a => a.setAttribute('aria-current', a.dataset.view===view ? 'page' : 'false'));
+      document.title = (state.data?.title||'Proyecto') + ' – ' + (view.charAt(0).toUpperCase()+view.slice(1));
+
+      if(view==='post'){
+        renderPostDetail(slugParam);
+      }
+    }
+    window.addEventListener('popstate', applyView);
+
+    // Enlaces del menú con pushState
+    $$('.menu a').forEach(a=>{
+      a.addEventListener('click', (ev)=>{
+        const url = new URL(a.href);
+        const v = url.searchParams.get('view');
+        history.pushState({}, '', '?view=' + v);
+        applyView();
+        $('#contenido').focus();
+        ev.preventDefault();
+      });
+    });
+
+    // Clicks en tarjetas del blog → detalle
+    $('#posts')?.addEventListener('click', (ev)=>{
+      const a = ev.target.closest('a[href*="?view=post"]');
+      if(a){
+        ev.preventDefault();
+        const url = new URL(a.href);
+        const slug = url.searchParams.get('slug');
+        history.pushState({}, '', '?view=post&slug=' + slug);
+        applyView();
+        window.scrollTo({top:0, behavior:'smooth'});
+      }
+    });
+
+    // Filtros de blog
+    $('#post-search')?.addEventListener('input', renderPostsList);
+    $('#post-year')?.addEventListener('change', renderPostsList);
+    $('#post-type')?.addEventListener('change', renderPostsList);
+
+    // Carga inicial: JSON externos
+    (async function init(){
+      try{
+        state.data = await jget(DATA_URL);
+        state.publications = await jget(PUBLICATIONS_URL);
+        state.prototypes   = await jget(PROTOTYPES_URL);
+        const index = await jget(POSTS_INDEX_URL); // { posts: ["slug1","slug2"] }
+        const loaded = await Promise.all(index.posts.map(slug => jget(POST_BASE + slug + '.json')));
+        state.posts = loaded.map(p=> ({ slug:p.slug, type:p.type, title:p.title, date:p.date, summary:p.summary, cover:p.cover, tags:p.tags||[], video:p.video || null }));
+      }catch(e){ console.error(e); }
+      renderAll();
+      applyView();
+    })();
+  </script>
+
+  <!-- ===== Estructura de ficheros (recomendado) ===== -->
+  <!--
+  /index.html (este archivo)
+  /logo.png
+  /data/project.json            ← datos generales del proyecto (title, tagline, description, contacts, objectives, team, lastUpdated, summaryVideo,...)
+  /data/publications.json        ← Array de publicaciones [{type,year,title,venue,authors[],doi?,pdf?,code?}]
+  /data/prototypes.json          ← Array de prototipos   [{name,description,repo?,demo?}]
+  /data/posts/index.json         ← { "posts": ["lanzamiento", "demo-orquestador", ...] }
+  /data/posts/lanzamiento.json   ← cada post con { slug, type, title, date, author?, summary, cover|video, tags[], content(HTML) }
+
+  Botones en color sólido. En portada: **logo centrado**, debajo **descripción del proyecto** y debajo **vídeo resumen** (configúralo en `project.json → summaryVideo`).
+  Publicaciones (agrupadas por **año → tipo** con filtros), prototipos y blog se cargan desde **JSON externos** para mantenimiento sin CMS.
+  -->
+</body>
+</html>
+

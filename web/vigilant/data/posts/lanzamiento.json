@@ -1,0 +1,12 @@
+{
+  "slug": "lanzamiento",
+  "type": "post",
+  "title": "Lanzamiento de VIGILANT",
+  "date": "2025-09-28",
+  "author": "Equipo VIGILANT",
+  "summary": "Objetivos, equipo y primeras tareas.",
+  "cover": "https://picsum.photos/seed/launch/1200/630",
+  "tags": ["noticias", "proyecto"],
+  "content": "<p>Arrancamos el proyecto <strong>VIGILANT</strong>...</p>"
+}
+
