@@ -53,19 +53,89 @@ VIGILANT is a research-driven, open framework to **analyze, diagnose, and respon
 
 ## 📁 Repository layout
 
-:construction: *To be completed*
+```
+vigilant/
+├─ docs/                      # Architecture notes, design decisions, API docs
+│  └─ architecture.png        # <-- Add/replace your architecture figure here
+├─ datasets/                  # Sample/redacted test data & schemas (no sensitive data)
+├─ encoding/                  # D2.1: event encoding + prompt-engineering utilities
+│  ├─ log_parsers/
+│  ├─ nettrace/               # PCAP → features/tokens pipelines
+│  └─ notebooks/
+├─ models/
+│  ├─ analysis_llm/           # D3.1 artifacts (adapters, RAG pipelines, eval scripts)
+│  ├─ response_llm/           # D3.3 intent→config generation & evaluation
+│  └─ evaluators/             # Benchmarks/metrics for analysis & response LLMs
+├─ sim/                       # D3.2: simulation harness (“digital twin” subset)
+│  ├─ envs/                   # docker-compose based lab topologies
+│  └─ validators/             # safety checks for proposed configs
+├─ backend/                   # Core services (API, orchestration, tool adapters)
+├─ frontend/                  # Minimal analyst UI (D3.4)
+├─ tools/                     # CTI connectors, visualization helpers
+├─ scripts/                   # Dev/CI utilities, data prep, lint, format, etc.
+├─ examples/                  # End-to-end example flows & sample prompts
+├─ CONTRIBUTING.md
+├─ CODE_OF_CONDUCT.md
+└─ LICENSE
+```
 
 ---
 
 ## 🚀 Quick start
 
-:construction: *To be completed*
+### Prerequisites
+
+- Linux or macOS (x86_64).  
+- **Python 3.11+** and **Poetry** or **uv** for dependency management.  
+- (Optional) **CUDA 12.x** + recent NVIDIA drivers for local GPU acceleration.  
+- Docker & docker-compose (for the simulation environments).
+
+```bash
+# clone
+git clone https://github.com/nesg-ugr/vigilant
+cd vigilant
+
+# create env & install
+python -m venv .venv && source .venv/bin/activate
+pip install -U pip
+pip install -r requirements.txt  # or: poetry install / uv sync
+
+# sanity checks
+python -m pip list
+pytest -q || true                 # run tests if present
+
+# spin up a minimal stack (API + UI)
+docker compose -f sim/envs/minimal/docker-compose.yml up --build
+```
 
 ---
 
 ## 💻 Usage
 
-:construction: *To be completed*
+### 1) Encode a dataset and query the analysis LLM
+
+```bash
+python encoding/nettrace/pcap_to_tokens.py \
+  --pcap ./datasets/demo/exfiltration_sample.pcap \
+  --out ./datasets/demo/exfiltration_tokens.jsonl
+```
+
+### 2) Express an intent and generate a config proposal
+
+```bash
+python models/response_llm/intent_to_config.py \
+  --intent "Isolate devices 10.10.1.21 and 10.10.1.37 suspected of data exfiltration" \
+  --context ./datasets/demo/exfiltration_context.yaml \
+  --out ./sim/candidates/iso_rules.json
+```
+
+### 3) Validate in simulation
+
+```bash
+python sim/validators/run_validation.py \
+  --candidate ./sim/candidates/iso_rules.json \
+  --env sim/envs/minimal
+```
 
 ---
 
@@ -116,7 +186,7 @@ A full and updated list is maintained in [`publications.bib`](./publications.bib
 
 ## 💡 Funding & acknowledgments
 
-This work is part of the **VIGILANT** research project (Knowledge Generation Projects 2024 – Oriented Research Type B, Spanish Ministry of Science, Innovation and Universities, PID2024-161902OB-I00).  
+This work is part of the **VIGILANT** research project (Knowledge Generation Projects 2024 – Oriented Research Type B, Spanish Ministry of Science, Innovation and Universities).  
 We acknowledge the **NESG (TIC-233)** group and collaborating partners, and plan public releases of preprocessing, benchmarks, models, and front/back-end artifacts to foster reproducible research and SME adoption.
 
 ---
@@ -131,5 +201,5 @@ See the `LICENSE` file for details.
 **Maintainers**
 
 - **NESG – Network Engineering & Security Group (UGR)**  
-  PIs: **Pedro García Teodoro** (pgteodor [at] ugr [dot] es)  & **Roberto Magán Carrión** (rmagan [at] ugr [dot] es)  
+  PIs: **Pedro García Teodoro** & **Roberto Magán Carrión**  
   Website: [https://nesg.ugr.es](https://nesg.ugr.es)
