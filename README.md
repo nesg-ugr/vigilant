@@ -86,29 +86,22 @@ The following list gathers **scientific publications derived from or related to 
 Please cite the relevant paper(s) when using any portion of this repository.  
 A full and updated list is maintained in [`publications.bib`](./publications.bib).
 
+* R. García-Peñas, R. A. Rodríguez-Gómez, and G. Maciá-Fernández, “Characterizing Internet Background Traffic from a Spain-Based Network Telescope,” Computers & Security, vol. 159, p. 104693, Dec. 2025, [doi: 10.1016/j.cose.2025.104693](https://www.sciencedirect.com/science/article/pii/S0167404825003827).
+
 ```bibtex
-@misc{vigilant_proposal_2025,
-  title   = {VIGILANT: Verification of Intent and Generation of Intelligent Logic for Automated actions against Network and systems security Threats},
-  author  = {García Teodoro, Pedro and Magán Carrión, Roberto and NESG-UGR Team},
-  howpublished = {\url{https://github.com/nesg-ugr/vigilant}},
-  year    = {2025},
-  note    = {Research project and prototype implementation}
-}
-
-@article{magan2025_vigilant_framework,
-  title   = {Leveraging Large Language Models for Automated Incident Response: The VIGILANT Framework},
-  author  = {Magán Carrión, Roberto and García Teodoro, Pedro and Camacho, José and Maciá-Fernández, Gabriel},
-  journal = {Computers & Security},
-  year    = {2025},
-  note    = {Under submission}
-}
-
-@inproceedings{magan2025_jnic_vigilant_demo,
-  title   = {VIGILANT: An LLM-driven Framework for Automated and Verifiable Cybersecurity Actions},
-  author  = {Magán Carrión, Roberto and García Teodoro, Pedro},
-  booktitle = {JNIC 2025 – Jornadas Nacionales de Investigación en Ciberseguridad},
-  year    = {2025},
-  note    = {Demo track}
+@article{garcia-penas_characterizing_2025,
+	title = {Characterizing {Internet} {Background} {Traffic} from a {Spain}-{Based} {Network} {Telescope}},
+	volume = {159},
+	issn = {0167-4048},
+	url = {https://www.sciencedirect.com/science/article/pii/S0167404825003827},
+	doi = {10.1016/j.cose.2025.104693},
+	urldate = {2025-10-13},
+	journal = {Computers \& Security},
+	author = {García-Peñas, Rodolfo and Rodríguez-Gómez, Rafael A. and Maciá-Fernández, Gabriel},
+	month = dec,
+	year = {2025},
+	keywords = {Backscatter, IBN (Internet Background Noise), IBR (Internet Background Radiation), Network telescope},
+	pages = {104693}
 }
 ```
 
