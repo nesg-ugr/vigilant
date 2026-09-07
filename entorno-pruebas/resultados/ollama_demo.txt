@@ -1,0 +1,154 @@
+================================================================================
+EJECUCIÓN DE PRUEBA: 2026-09-03 13:46:44
+================================================================================
+
+--- MÉTRICAS DE RENDIMIENTO ---
+Model                | Time (s)   | Tokens   | Speed (tok/s)
+------------------------------------------------------------
+llama3.2             | 9.24       | 516      | 94.26       
+deepseek-r1:1.5b     | 5.95       | 794      | 177.34      
+
+--------------------------------------------------------------------------------
+
+--- RESPUESTAS DETALLADAS ---
+
+=== MODELO: llama3.2 ===
+**Analysis**
+
+The provided TCP dump summary reveals a potential security threat. The attack vector appears to be a SQL Injection (SQLi) attack on the web server running at `10.0.0.5:80`.
+
+Here's a breakdown of the attack:
+
+1. The initial TCP SYN (192.168.1.50:49152 -> 10.0.0.5:80) indicates an incoming connection from `192.168.1.50` to the web server.
+2. The subsequent TCP SYN-ACK (10.0.0.5:80 -> 192.168.1.50:49152) indicates an acknowledgement of the incoming connection.
+3. The next TCP ACK (192.168.1.50:49152 -> 10.0.0.5:80) indicates that the connection is being used for communication.
+4. The HTTP POST request (192.168.1.50:49152 -> 10.0.0.5:80 HTTP POST /login.php ('OR 1=1 --)) contains a malicious payload, which appears to be a SQL injection attack. The payload `('OR 1=1 --)` is designed to bypass the web application's security measures and inject malicious SQL code.
+5. The HTTP 200 OK response (10.0.0.5:80 -> 192.168.1.50:49152 HTTP 200 OK) indicates that the web application has successfully received and processed the malicious request.
+
+**Immediate Remediation Steps**
+
+To address this security threat, the following immediate remediation steps should be taken:
+
+1. **Block the malicious IP address**: Deny all incoming traffic from `192.168.1.50` to prevent further attacks.
+2. **Log and monitor**: Ensure that the web server's logs are properly configured to record and monitor incoming HTTP requests. This will help in identifying and tracking potential security incidents.
+3. **Update web application security**: Review and update the web application's security configuration to prevent SQL injection attacks. This may include using prepared statements, parameterized queries, and validation of user input.
+4. **Implement web application firewall (WAF)**: Consider deploying a WAF to detect and prevent SQL injection attacks and other common web application vulnerabilities.
+5. **Conduct a thorough investigation**: Perform a detailed investigation to determine the root cause of the attack and identify any other potential vulnerabilities.
+
+By taking these immediate remediation steps, you can mitigate the security threat and prevent further attacks.
+
+----------------------------------------
+
+=== MODELO: deepseek-r1:1.5b ===
+
+
+The analysis of the TCP dump summary reveals a valid HTTP request on a legitimate host. The potential threat is centered around a misconfigured or blocked connection rather than a security breach. Immediate remediation steps include:
+
+1. **Verify Hostnames**: Ensure the hostnames are correct. If hostnames 192.168.1.50 are actually 192.168.1.5, this is a clear vulnerability.
+2. **Check Port Numbers**: Confirm that the port number for the connection matches the expected value from the login.php URL.
+3. **Ensure Connection**: Verify that the connection is allowed by any relevant firewall rules.
+4. **Examine Login.php**: Investigate the login.php endpoint for potential malicious scripts or attack vectors.
+
+By addressing these areas, the connection can be restored to its normal operation.
+
+----------------------------------------
+
+================================================================================
+
+
+================================================================================
+EJECUCIÓN DE PRUEBA: 2026-09-03 13:56:23
+================================================================================
+
+--- MÉTRICAS DE RENDIMIENTO ---
+Model                | Time (s)   | Tokens   | Speed (tok/s)
+------------------------------------------------------------
+qwen2.5-coder:7b     | 13.21      | 459      | 48.07       
+deepseek-r1:8b       | 33.05      | 1022     | 36.29       
+llama3.1:8b          | 12.22      | 394      | 44.42       
+
+--------------------------------------------------------------------------------
+
+--- RESPUESTAS DETALLADAS ---
+
+=== MODELO: qwen2.5-coder:7b ===
+### Potential Security Threat Analysis:
+
+1. **TCP Handshake (SYN, SYN-ACK, ACK)**:
+   - This is a standard 3-way TCP handshake, indicating a normal connection attempt from `192.168.1.50` to `10.0.0.5`. No immediate security threat here.
+
+2. **HTTP POST Request with Injection**:
+   - The POST request to `/login.php` includes a SQL injection attempt (`'OR 1=1 --`). This is a common type of SQL Injection attack, where the attacker is trying to manipulate the SQL query to bypass authentication or retrieve sensitive data.
+
+### Immediate Remediation Steps:
+
+1. **Block the Request**:
+   - Immediately block the HTTP request that contained the injection attempt. This can be done using firewall rules or intrusion detection systems (IDS/IPS).
+
+2. **Check for Similar Activity**:
+   - Investigate the network for any similar POST requests or other unusual activity around the same time frame. Look for patterns or anomalies that could indicate further attacks.
+
+3. **Review Logs**:
+   - Review both the web server logs and security logs on the SOC server for any similar injection attempts or suspicious activity. This can help in identifying if this is part of a larger attack campaign.
+
+4. **Update and Patch Systems**:
+   - Ensure that the web server and any related applications are up-to-date with the latest security patches. SQL injection vulnerabilities are often addressed in regular updates.
+
+5. **Implement Input Validation**:
+   - Enforce strict input validation on all user inputs, especially on login forms. Use parameterized queries or prepared statements to prevent SQL injection.
+
+6. **Monitor for Anomalies**:
+   - Increase monitoring on the network and web server for any unusual activity. Set up alerts for any deviations from normal behavior.
+
+7. **Update Security Policies**:
+   - Review and update your security policies to include guidelines for preventing and responding to SQL injection attacks.
+
+8. **Conduct a Security Audit**:
+   - Perform a thorough security audit of the web application and related systems to identify and remediate any potential vulnerabilities.
+
+By taking these steps, you can mitigate the immediate threat and improve the overall security posture of your network.
+
+----------------------------------------
+
+=== MODELO: deepseek-r1:8b ===
+
+### Potential Security Threat:
+**SQL Injection Attack**  
+The HTTP POST request to `/login.php` contains a classic SQL injection payload (`'OR 1=1 --`). The server responded with a `200 OK` status, indicating that the injection was successful and the request was processed. This suggests the application is vulnerable to **injection attacks** and lacks proper input sanitization or parameterized queries.
+
+### Immediate Remediation Steps:
+1. **Isolate the affected server**: Restrict network access to the vulnerable web server (10.0.0.5) to a non-production zone (e.g., a DMZ or a dedicated VLAN) or isolate it entirely from the internal network until it can be patched.
+2. **Investigate the source**: Identify the user account associated with the IP address `192.168.1.50`. If it belongs to a legitimate user, change their password immediately. If it’s unknown or suspicious, consider blocking the IP at the firewall.
+3. **Patch the vulnerability**: Revise the `/login.php` script to use parameterized queries or prepared statements for all database interactions. Validate and sanitize all user inputs rigorously.
+4. **Scan for other vulnerable endpoints**: Use automated tools to scan the entire web application for other instances of SQL injection or similar vulnerabilities (e.g., in forms, APIs, or other pages).
+5. **Audit server logs**: Review the server logs for additional suspicious activity or attempts to exploit other endpoints, such as file manipulation or command injection.
+
+----------------------------------------
+
+=== MODELO: llama3.1:8b ===
+**Analysis:**
+
+The provided TCP dump summary shows a potential SQL injection attack. Here's a breakdown of the evidence:
+
+1. A TCP SYN packet from `192.168.1.50:49152` to `10.0.0.5:80` initiates a connection to a web server.
+2. The web server responds with a SYN-ACK packet, indicating it's willing to establish a connection.
+3. The client sends a TCP ACK packet, completing the three-way handshake.
+4. The client sends an HTTP POST request to `/login.php` with the following malicious payload: `'OR 1=1 --)`. This is a classic example of a SQL injection attempt, where the attacker is trying to inject a malicious SQL query to manipulate the database.
+
+**Attack Vector:**
+
+The attack vector present here is **SQL Injection (SQLi)**. The attacker is attempting to inject malicious SQL code into the `/login.php` page, which is likely a login script for a web application. The malicious payload `OR 1=1 --)` is designed to bypass authentication and allow the attacker to access sensitive data or perform unauthorized actions.
+
+**Immediate Remediation Steps:**
+
+1. **Block the IP address**: Immediately block the IP address `192.168.1.50` to prevent further attacks.
+2. **Review web application logs**: Analyze web application logs to determine the scope of the attack and identify any potential vulnerabilities.
+3. **Patch the web application**: Update the web application to the latest version, which should include patches for known SQL injection vulnerabilities.
+4. **Conduct a thorough security audit**: Perform a thorough security audit of the web application to identify and remediate any underlying vulnerabilities.
+5. **Implement security controls**: Implement security controls such as Web Application Firewalls (WAFs), Intrusion Detection/Prevention Systems (IDPS), and regular security testing to prevent similar attacks in the future.
+
+----------------------------------------
+
+================================================================================
+
+
